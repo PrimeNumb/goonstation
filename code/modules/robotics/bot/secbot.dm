@@ -112,7 +112,7 @@
 	desc = "This little security robot seems to have a particularly large chip on its... shoulder? ...head?"
 	our_baton_type = /obj/item/baton/classic
 	loot_baton_type = /obj/item/baton/classic
-	stun_type = "harm_classic"
+	stun_type = "harm_stun"
 	emagged = 2
 	control_freq = 0
 

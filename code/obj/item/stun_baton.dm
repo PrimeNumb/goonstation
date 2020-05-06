@@ -39,7 +39,6 @@
 	var/stun_normal_weakened = 20
 	var/stun_normal_stuttering = 20
 	var/stun_harm_weakened = 8 // Only used when next flag is set to 1.
-	var/instant_harmbaton_stun = 0 // Legacy behaviour for harmbaton, that is an instant knockdown.
 #ifdef USE_STAMINA_DISORIENT
 	var/stamina_based_stun = 1
 #else
@@ -195,7 +194,7 @@
 		if (!src || !istype(src))
 			return 0
 
-		if (src.stamina_based_stun != 0 && src.cell && can_stun())
+		if (src.stamina_based_stun != 0 && (src.cell || !uses_electricity ) && can_stun())
 			src.stamina_damage = src.stamina_based_stun_amount
 			return 1
 		else
@@ -247,7 +246,7 @@
 					flick(flick_baton_active, src)
 					playsound(get_turf(src), "sound/impact_sounds/Energy_Hit_3.ogg", 50, 1, -1)
 
-			if ("harm_classic")
+			if ("harm_stun")
 				user.visible_message("<span style=\"color:red\"><B>[victim] has been beaten with the [src.name] by [user]!</B></span>")
 				playsound(get_turf(src), "swing_hit", 50, 1, -1)
 				logTheThing("combat", user, victim, "beats %target% with the [src.name] at [log_loc(victim)].")
@@ -264,14 +263,11 @@
 			dude_to_stun = victim
 
 		// Stun the target mob.
-		if (type == "harm_classic")
-			dude_to_stun.changeStatus("weakened", src.stun_harm_weakened * 10)
-			dude_to_stun.force_laydown_standup()
+		if (type == "harm_stun")
 			random_brute_damage(dude_to_stun, src.force,1) // Necessary since the item/attack() parent wasn't called. Wait, was this armor-piercing? -Tarm
-			dude_to_stun.remove_stamina(src.stamina_damage)
+			dude_to_stun.do_disorient(src.stamina_damage, weakened = src.stun_normal_weakened * 10, disorient = 80)
 			if (user && ismob(user))
 				user.remove_stamina(src.stamina_cost)
-
 		else
 			if (dude_to_stun.bioHolder && dude_to_stun.bioHolder.HasEffect("resist_electric") && src.uses_electricity != 0)
 				boutput(dude_to_stun, "<span style=\"color:blue\">Thankfully, electricity doesn't do much to you in your current state.</span>")
@@ -283,8 +279,6 @@
 						dude_to_stun.stuttering = src.stun_normal_stuttering
 				else
 					dude_to_stun.do_disorient(src.stamina_damage, weakened = src.stun_normal_weakened * 10, disorient = 80)
-					//dude_to_stun.remove_stamina(src.stamina_damage)
-					//dude_to_stun.stamina_stun() // Must be called manually here to apply the stun instantly.
 
 				if (isliving(dude_to_stun) && src.uses_electricity != 0)
 					var/mob/living/L = dude_to_stun
@@ -344,21 +338,12 @@
 		switch (user.a_intent)
 			if ("harm")
 				if (src.uses_electricity == 0)
-					if (src.instant_harmbaton_stun != 0)
-						src.do_stun(user, M, "harm_classic", 2)
-					else
-						playsound(get_turf(src), "swing_hit", 50, 1, -1)
-						..() // Parent handles attack log entry and stamina drain.
+					src.do_stun(user, M, "harm_stun", 2)
 				else
 					if (src.status == 0 || (src.status != 0 && src.can_stun() == 0))
-						if (src.instant_harmbaton_stun != 0)
-							src.do_stun(user, M, "harm_classic", 2)
-						else
-							playsound(get_turf(src), "swing_hit", 50, 1, -1)
-							..()
+						src.do_stun(user, M, "harm_stun", 2)
 					else
 						src.do_stun(user, M, "failed_harm", 1)
-
 			else
 				if (src.uses_electricity == 0)
 					src.do_stun(user, M, "stun_classic", 2)
@@ -425,8 +410,7 @@
 	uses_electricity = 0
 	stun_normal_weakened = 8
 	stun_normal_stuttering = 8
-	instant_harmbaton_stun = 1
-	stamina_based_stun_amount = 90
+	stamina_based_stun_amount = 130
 
 	New()
 		..()
