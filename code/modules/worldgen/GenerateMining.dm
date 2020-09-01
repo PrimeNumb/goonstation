@@ -531,6 +531,15 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		prefabPath = "assets/maps/prefabs/prefab_drug_den.dmm"
 		prefabSizeX = 32
 		prefabSizeY = 27
+
+	genetics_derelict // Survivors of a previous space station
+		maxNum = 1
+		required = 1
+		probability = 20
+		prefabPath = "assets/maps/prefabs/prefab_genetics_derelict.dmm"
+		prefabSizeX = 22
+		prefabSizeY = 22
+
 	//UNDERWATER AREAS FOR OSHAN
 
 	pit

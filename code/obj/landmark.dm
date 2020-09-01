@@ -117,6 +117,12 @@ var/global/list/landmarks = list()
 				deleted_on_start = 1
 				qdel(src)
 
+		if ("oblivious_geneticist")
+			SPAWN_DBG(3 SECONDS)
+				new /mob/living/carbon/human/normal/geneticist(src.loc)
+				deleted_on_start = 1
+				qdel(src)
+
 		if ("monkeyspawn_normal")
 			SPAWN_DBG(6 SECONDS)
 				new /mob/living/carbon/human/npc/monkey(src.loc)

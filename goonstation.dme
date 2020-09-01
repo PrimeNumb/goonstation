@@ -950,6 +950,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\power\nuke\style.dm"
 #include "code\modules\power\nuke\turbine.dm"
 #include "code\modules\power\nuke\rods\rods.dm"
+#include "code\modules\prefabs\genetics_derelict.dm"
 #include "code\modules\projectiles\40mm.dm"
 #include "code\modules\projectiles\bfg.dm"
 #include "code\modules\projectiles\bullet.dm"
