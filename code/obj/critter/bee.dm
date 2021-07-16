@@ -1997,3 +1997,28 @@
 
 		else
 			..()
+
+/obj/critter/killerbee
+	icon = 'icons/misc/bee.dmi'
+	icon_state = "killerbee-ak"
+	density = 0
+
+	New()
+		..()
+
+	proc/set_target(var/mob/new_target)
+		src.target = new_target
+
+	process()
+		if(target && task != "chasing")
+			task = "chasing"
+
+		return ai_think()
+
+	ai_think()
+		switch(task)
+			if("chasing")
+				boutput(world, "chasing not implemented")
+				walk_to(src, target, 1)
+			if("firing")
+				boutput(world, "firing not implemented")
