@@ -345,6 +345,16 @@
 	Q.caller = usr
 	Q.tysonspeed = speed
 
+/client/proc/cmd_admin_beegib(mob/M)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "Bee Gib"
+	set popup_menu = 0
+
+	if(!isadmin(src))
+		boutput(src, "Only administrators may use this command.")
+		return
+	boutput(world, "not implemented")
+
 /obj/bantyson/
 	name = "Mike Tyson"
 	desc = "Oh shit!!!"

@@ -1143,6 +1143,13 @@ var/global/noir = 0
 				usr.client.cmd_admin_tysongib(M)
 			else
 				alert("You need to be at least a Primary Admin to tyson gib a dude.")
+		if ("beegib")
+			if( src.level >= LEVEL_PA )
+				var/mob/M = locate(href_list["target"])
+				if (!M) return
+				usr.client.cmd_admin_beegib(M)
+			else
+				alert("You need to be at least a Primary Admin to bee gib a dude.")
 		if("damn")
 			if(src.level >= LEVEL_PA)
 				var/mob/M = locate(href_list["target"])

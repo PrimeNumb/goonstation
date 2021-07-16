@@ -172,6 +172,7 @@
 					<div class='r'>
 						<a href='[playeropt_link(M, "gib")]'>Normal</a> &bull;
 						<a href='[playeropt_link(M, "implodegib")]'>Implode</a> &bull;
+						<a href='[playeropt_link(M, "beegib")]'>Beegib</a> &bull;
 						<a href='[playeropt_link(M, "buttgib")]'>Buttgib</a> &bull;
 						<a href='[playeropt_link(M, "partygib")]'>Party</a> &bull;
 						<a href='[playeropt_link(M, "firegib")]'>Fire</a> &bull;
